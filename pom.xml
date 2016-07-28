@@ -9,8 +9,9 @@
 
   <artifactId>cobertura</artifactId>
   <packaging>hpi</packaging>
-  <version>1.9.9-SNAPSHOT</version>
+  <version>1.9.10-SNAPSHOT</version>
   <name>Jenkins Cobertura Plugin</name>
+    <description>Allows Cobertura-format test results to be published, with the support for Pipeline. --cmpoon</description>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Cobertura+Plugin</url>
 
   <properties>
@@ -40,6 +41,11 @@
       <id>ssogabe</id>
       <name>Seiji Sogabe</name>
       <email>s.sogabe@gmail.com</email>
+    </developer>
+    <developer>
+      <id>cmpoon</id>
+      <name>CMPoon</name>
+      <email>cmpoon212@gmail.com</email>
     </developer>
   </developers>
 
