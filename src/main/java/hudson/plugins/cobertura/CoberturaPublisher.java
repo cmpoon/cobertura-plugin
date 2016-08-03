@@ -323,10 +323,16 @@ public class CoberturaPublisher extends Recorder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> build, FilePath workspace, Launcher launcher, final TaskListener listener)
             throws InterruptedException, IOException {
-        Result threshold = onlyStable ? Result.SUCCESS : Result.UNSTABLE;
-        if (build.getResult().isWorseThan(threshold)) {
-            listener.getLogger().println("Skipping Cobertura coverage report as build was not " + threshold.toString() + " or better ...");
-            return;
+        if (build == null || build.getResult() == null){
+        	listener.getLogger().println("WARNING: Build information is not available to the plugin. Assuming stable.");
+        	build.setResult(Result.SUCCESS);
+        }else{
+    	
+	    	Result threshold = onlyStable ? Result.SUCCESS : Result.UNSTABLE;
+	        if (build.getResult().isWorseThan(threshold)) {
+	            listener.getLogger().println("Skipping Cobertura coverage report as build was not " + threshold.toString() + " or better ...");
+	            return;
+	        }
         }
 
         listener.getLogger().println("[Cobertura] Publishing Cobertura coverage report...");
@@ -458,7 +464,9 @@ public class CoberturaPublisher extends Recorder implements SimpleBuildStep {
         } else {
             listener.getLogger().println("No coverage results were successfully parsed.  Did you generate "
                     + "the XML report(s) for Cobertura?");
-            build.setResult(Result.FAILURE);
+            if (failNoReports) {
+            	build.setResult(Result.FAILURE);
+            }
         }
     }
 

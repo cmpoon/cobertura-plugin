@@ -66,7 +66,24 @@ public class CoberturaProjectAction extends Actionable implements ProminentProje
         return null;
     }
     private Run<?, ?> getLastBuildToBeConsidered(){
-        return onlyStable ? run.getParent().getLastStableBuild() : run.getParent().getLastSuccessfulBuild();
+    	
+    	Run lastBuild = null;
+
+    	Job project = run.getParent();
+    	
+		if (project != null){
+			if (onlyStable && project.getLastStableBuild() != null){
+				lastBuild = project.getLastStableBuild();
+			}else if (project.getLastSuccessfulBuild() != null){
+				lastBuild = project.getLastSuccessfulBuild();
+			}	
+		}
+    	
+    	if (lastBuild == null){
+    		lastBuild = run.getPreviousSuccessfulBuild();
+    	}
+
+        return lastBuild;
     }
      /**
      * Getter for property 'lastResult'.
