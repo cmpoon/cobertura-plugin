@@ -65,10 +65,16 @@ public class CoberturaProjectAction extends Actionable implements ProminentProje
         }
         return null;
     }
+    
+    
     private Run<?, ?> getLastBuildToBeConsidered(){
     	
     	Run lastBuild = null;
 
+    	if (run == null){
+    		return null;
+    	}
+    	
     	Job project = run.getParent();
     	
 		if (project != null){
